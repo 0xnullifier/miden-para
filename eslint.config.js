@@ -1,7 +1,13 @@
 module.exports = [
   {
     // Ignore patterns
-    ignores: ['target/**/*', '**/target/**/*', '**/*.d.ts', 'docs/**/*'],
+    ignores: [
+      'target/**/*',
+      '**/target/**/*',
+      '**/*.d.ts',
+      'docs/**/*',
+      'dist/**/*',
+    ],
   },
   {
     // Configuration for JavaScript files
