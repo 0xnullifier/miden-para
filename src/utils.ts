@@ -1,9 +1,9 @@
-import ParaWeb, { Wallet } from "@getpara/web-sdk";
+import ParaWeb, { Wallet } from '@getpara/web-sdk';
 
 /// Create a valid serialized miden `Signature` from the hex signature given by para
 export const fromHexSig = (hexString: string) => {
   if (hexString.length % 2 !== 0) {
-    throw new Error("Invalid string len");
+    throw new Error('Invalid string len');
   }
   // 1 -> Auth scheme for ECDSA
   const bytes: number[] = [1];
@@ -41,7 +41,7 @@ function bigintFromLeBytes(bytes: Uint8Array | number[]): bigint {
 
 // assumes the format '0x04' | X | Y
 export const evmPkToCommitment = async (uncompressedPublicKey: string) => {
-  const { Felt, Rpo256, FeltArray } = await import("@demox-labs/miden-sdk");
+  const { Felt, Rpo256, FeltArray } = await import('@demox-labs/miden-sdk');
   const withoutPrefix = uncompressedPublicKey.slice(4);
   const x = withoutPrefix.slice(0, 64);
   const y = withoutPrefix.slice(64); // hex encoded string
@@ -80,14 +80,14 @@ export const getUncompressedPublicKeyFromWallet = async (
   let publicKey = wallet.publicKey;
   if (!publicKey) {
     const { token } = await para.issueJwt();
-    const payload = JSON.parse(window.atob(token.split(".")[1]));
+    const payload = JSON.parse(window.atob(token.split('.')[1]));
     if (!payload.data) {
-      throw new Error("Got invalid jwt token");
+      throw new Error('Got invalid jwt token');
     }
     const wallets = payload.data.connectedWallets;
     const w = wallets.find((w) => w.id === wallet.id);
     if (!w) {
-      throw new Error("Wallet Not Found in jwt data");
+      throw new Error('Wallet Not Found in jwt data');
     }
     publicKey = w.publicKey;
   }

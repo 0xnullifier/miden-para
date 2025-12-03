@@ -3,29 +3,28 @@
 For react you can use this hook. Create a `use-miden.ts` and paste the following code:
 
 ```typescript
-"use client";
+'use client';
 
-import { useClient, useAccount, Wallet } from "@getpara/react-sdk";
-import { createParaMidenClient } from "miden-para";
-import { useEffect, useRef, useState } from "react";
+import { useClient, useAccount, Wallet } from '@getpara/react-sdk';
+import { createParaMidenClient } from 'miden-para';
+import { useEffect, useRef, useState } from 'react';
 
 export function useMiden(nodeUrl?: string) {
   const para = useClient();
   const { isConnected, embedded } = useAccount();
-  const clientRef = useRef<import("@demox-labs/miden-sdk").WebClient | null>(
-    null
+  const clientRef = useRef<import('@demox-labs/miden-sdk').WebClient | null>(
+    null,
   );
-  const [accountId, setAccountId] = useState<string>("");
+  const [accountId, setAccountId] = useState<string>('');
 
   // Filter for EVM-compatible wallets
-  const evmWallets = embedded.wallets?.filter((w) => w.type === "EVM");
+  const evmWallets = embedded.wallets?.filter((w) => w.type === 'EVM');
 
   useEffect(() => {
-    console.log("useMiden effect triggered", evmWallets, isConnected, para);
     async function setupClient() {
       if (isConnected && evmWallets && para) {
         const { AccountType, AccountStorageMode } =
-          await import("@demox-labs/miden-sdk");
+          await import('@demox-labs/miden-sdk');
 
         const { client: midenParaClient, accountId: aId } =
           await createParaMidenClient(para, evmWallets[0] as Wallet, {

@@ -3,20 +3,20 @@ import {
   ParaWeb,
   SuccessfulSignatureRes,
   Wallet,
-} from "@getpara/web-sdk";
-import { keccak_256 as keccak256 } from "@noble/hashes/sha3.js";
+} from '@getpara/web-sdk';
+import { keccak_256 as keccak256 } from '@noble/hashes/sha3.js';
 import {
   evmPkToCommitment,
   fromHexSig,
   getUncompressedPublicKeyFromWallet,
-} from "./utils.js";
-import { MidenAccountOpts, Opts } from "./types.js";
-import { bytesToHex, hexToBytes } from "@noble/hashes/utils.js";
+} from './utils.js';
+import { MidenAccountOpts, Opts } from './types.js';
+import { bytesToHex, hexToBytes } from '@noble/hashes/utils.js';
 
 /// Create a signing callback for the externalkeystore
 export const signCb = (para: ParaWeb, wallet: Wallet) => {
   return async (_: Uint8Array, signingInputs: Uint8Array) => {
-    const { SigningInputs } = await import("@demox-labs/miden-sdk");
+    const { SigningInputs } = await import('@demox-labs/miden-sdk');
     const inputs = SigningInputs.deserialize(signingInputs);
     // turn the singing inputs to commitment and then to hex without the '0x'
     let commitment = inputs.toCommitment().toHex().slice(2);
@@ -32,12 +32,12 @@ export const signCb = (para: ParaWeb, wallet: Wallet) => {
 };
 
 async function createAccount(
-  midenClient: import("@demox-labs/miden-sdk").WebClient,
+  midenClient: import('@demox-labs/miden-sdk').WebClient,
   publicKey: string,
   opts: MidenAccountOpts
 ) {
   const { AccountBuilder, AccountComponent, WebClient } =
-    await import("@demox-labs/miden-sdk");
+    await import('@demox-labs/miden-sdk');
   let pkc = await evmPkToCommitment(publicKey);
   if (midenClient instanceof WebClient) {
     // create a new account
@@ -60,7 +60,7 @@ async function createAccount(
     await midenClient.syncState();
     return account.id().toString();
   } else {
-    throw new Error("Invalid Miden Client");
+    throw new Error('Invalid Miden Client');
   }
 }
 
@@ -70,8 +70,7 @@ export async function createParaMidenClient(
   opts: Opts
 ) {
   let publicKey = await getUncompressedPublicKeyFromWallet(para, wallet);
-  const { WebClient } = await import("@demox-labs/miden-sdk");
-
+  const { WebClient } = await import('@demox-labs/miden-sdk');
   const client = await WebClient.createClientWithExternalKeystore(
     opts.endpoint,
     opts.nodeTransportUrl,

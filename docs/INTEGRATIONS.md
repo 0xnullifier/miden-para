@@ -13,8 +13,8 @@ npm install miden-para
 Use the `createParaMidenClient` function from `"miden-para"` to create a Miden `WebClient` :
 
 ```typescript
-import { ParaWeb } from "@getpara/web-sdk"; // or your framework's sdk
-import { createParaMidenClient } from "miden-para";
+import { ParaWeb } from '@getpara/web-sdk'; // or your framework's sdk
+import { createParaMidenClient } from 'miden-para';
 
 const PARA_API_KEY = import.meta.env.VITE_PARA_API_KEY;
 export const para = new ParaWeb(PARA_API_KEY);
@@ -27,10 +27,10 @@ const { client: midenParaClient, accountId } = await createParaMidenClient(
     endpoint: nodeUrl,
     type: AccountType.RegularAccountImmutableCode,
     storageMode: AccountStorageMode.private(),
-  }
+  },
 );
 
-// use it as normal `WebClient` instance
+// use it as the normal `WebClient` instance
 await midenParaClient.syncState();
 ```
 
