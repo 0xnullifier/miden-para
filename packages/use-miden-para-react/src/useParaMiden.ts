@@ -2,12 +2,11 @@
 
 import { useClient, useAccount, type Wallet } from '@getpara/react-sdk';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { createParaMidenClient, MidenAccountOpts } from 'miden-para';
-import { MidenAccountStorageMode } from 'miden-para/dist/types/types';
+import { createParaMidenClient, type Opts } from 'miden-para';
 
 export function useParaMiden(
   nodeUrl: string,
-  storageMode: MidenAccountStorageMode = 'public'
+  storageMode: Opts['storageMode'] = 'public'
 ) {
   const para = useClient();
   const { isConnected, embedded } = useAccount();
