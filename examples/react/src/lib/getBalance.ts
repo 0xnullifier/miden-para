@@ -1,12 +1,12 @@
 export async function getBalance(accountId: string) {
-  const { WebClient, AccountId } = await import("@demox-labs/miden-sdk");
+  const { WebClient, AccountId } = await import('@demox-labs/miden-sdk');
 
   const client = await WebClient.createClient(); // default endpoint is tesnet
   await client.syncState();
 
   const account = await client.getAccount(AccountId.fromHex(accountId));
   if (!account) {
-    throw new Error("Account not found");
+    throw new Error('Account not found');
   }
   client.terminate();
   return account

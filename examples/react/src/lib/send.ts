@@ -1,19 +1,18 @@
 export async function send(
-  midenParaClient: import("@demox-labs/miden-sdk").WebClient,
+  midenParaClient: import('@demox-labs/miden-sdk').WebClient,
   fromAccountId: string,
   toAddress: string,
   faucetId: string,
   amount: bigint
 ) {
-  const { Address, AccountId, NoteType } = await import(
-    "@demox-labs/miden-sdk"
-  );
+  const { Address, AccountId, NoteType } =
+    await import('@demox-labs/miden-sdk');
 
   const toAddr = Address.fromBech32(toAddress);
   const fromAddr = AccountId.fromHex(fromAccountId);
   const from = await midenParaClient.getAccount(fromAddr);
   if (!from) {
-    throw new Error("Sender account not found");
+    throw new Error('Sender account not found');
   }
   await midenParaClient.syncState();
   const newSendTransactionRequestStart = performance.now();

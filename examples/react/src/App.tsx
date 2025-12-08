@@ -1,4 +1,4 @@
-import { Button } from "./components/ui/button";
+import { Button } from './components/ui/button';
 import {
   Table,
   TableBody,
@@ -6,20 +6,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./components/ui/table";
-import { Wallet, Coins, Send, Eye } from "lucide-react";
-import { useAccount, useLogout, useModal, useWallet } from "@getpara/react-sdk";
-import "@getpara/react-sdk/styles.css";
-import { useParaMiden } from "miden-para-react";
-import { createFaucetMintAndConsume } from "./lib/mint";
+} from './components/ui/table';
+import { Wallet, Coins, Send, Eye } from 'lucide-react';
+import { useAccount, useLogout, useModal, useWallet } from '@getpara/react-sdk';
+import '@getpara/react-sdk/styles.css';
+import { useParaMiden } from 'miden-para-react';
+import { createFaucetMintAndConsume } from './lib/mint';
 import {
   MintConsumeDialog,
   type MintAndConsumeProgress,
-} from "./components/MintConsumeDialog";
-import { SendDialog } from "./components/SendDialog";
-import { getBalance } from "./lib/getBalance";
-import { send } from "./lib/send";
-import { useState, useEffect } from "react";
+} from './components/MintConsumeDialog';
+import { SendDialog } from './components/SendDialog';
+import { getBalance } from './lib/getBalance';
+import { send } from './lib/send';
+import { useState, useEffect } from 'react';
 
 function App() {
   const { isConnected } = useAccount();
@@ -27,11 +27,11 @@ function App() {
   const { openModal } = useModal();
   const { logoutAsync } = useLogout();
   const { client, accountId } = useParaMiden(
-    "https://rpc.testnet.miden.io",
-    "public",
+    'https://rpc.testnet.miden.io',
+    'public',
     {
-      accountSeed: "hello world",
-      noteTransportUrl: "https://transport.miden.io",
+      accountSeed: 'hello world',
+      noteTransportUrl: 'https://transport.miden.io',
     }
   );
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,13 +43,12 @@ function App() {
   }> | null>(null);
   const [isBalanceDialogOpen, setIsBalanceDialogOpen] = useState(false);
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
-  const [address, setAddress] = useState<string>("");
+  const [address, setAddress] = useState<string>('');
 
   useEffect(() => {
     (async () => {
-      const { AccountId, Address, NetworkId } = await import(
-        "@demox-labs/miden-sdk"
-      );
+      const { AccountId, Address, NetworkId } =
+        await import('@demox-labs/miden-sdk');
       if (accountId) {
         setAddress(
           Address.fromAccountId(AccountId.fromHex(accountId)).toBech32(
@@ -61,7 +60,7 @@ function App() {
   }, [accountId]);
 
   const onConnect = async () => {
-    console.log("isConnected", isConnected);
+    console.log('isConnected', isConnected);
     if (isConnected) {
       await logoutAsync();
     }
@@ -75,7 +74,7 @@ function App() {
         const fetchedBalances = await getBalance(accountId);
         setBalances(fetchedBalances);
       } catch (err) {
-        console.error("Failed to fetch balances:", err);
+        console.error('Failed to fetch balances:', err);
       }
     };
 
@@ -87,7 +86,7 @@ function App() {
 
   const handleMintConsume = async () => {
     if (!client || !accountId) {
-      setError("Client or address not available");
+      setError('Client or address not available');
       return;
     }
 
@@ -98,7 +97,7 @@ function App() {
     try {
       await createFaucetMintAndConsume(client, accountId, setProgress);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : 'An error occurred');
     }
   };
 
@@ -118,7 +117,7 @@ function App() {
     faucetId: string
   ) => {
     if (!client || !accountId)
-      throw new Error("Client or address not available");
+      throw new Error('Client or address not available');
     const result = await send(
       client,
       accountId,
@@ -138,7 +137,7 @@ function App() {
           <div className="flex items-center justify-between bg-orange-50 border border-orange-100 p-4">
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-gray-700 wrap-anywhere">
-                {isConnected ? address : "Disconnected"}
+                {isConnected ? address : 'Disconnected'}
               </span>
             </div>
           </div>
@@ -147,11 +146,11 @@ function App() {
             onClick={onConnect}
             size="lg"
             className="w-full cursor-pointer wrap-anywhere"
-            variant={isConnected ? "outline" : "default"}
+            variant={isConnected ? 'outline' : 'default'}
           >
             <Wallet className="w-4 h-4" />
             <span className="truncate">
-              {isConnected ? wallet?.address : "Connect Wallet"}
+              {isConnected ? wallet?.address : 'Connect Wallet'}
             </span>
           </Button>
 

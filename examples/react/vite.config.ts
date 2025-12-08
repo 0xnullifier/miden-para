@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
-import path from "path";
-import wasm from "vite-plugin-wasm";
-import topLevelAwait from "vite-plugin-top-level-await";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import path from 'path';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [
@@ -13,26 +13,26 @@ export default defineConfig({
     topLevelAwait(),
     react(),
     nodePolyfills({
-      include: ["buffer", "crypto", "stream", "util"],
+      include: ['buffer', 'crypto', 'stream', 'util'],
     }),
   ],
-  assetsInclude: ["**/*.wasm"],
+  assetsInclude: ['**/*.wasm'],
   optimizeDeps: {
-    exclude: ["@demox-labs/miden-sdk"],
+    exclude: ['@demox-labs/miden-sdk'],
     esbuildOptions: {
-      target: "esnext",
+      target: 'esnext',
     },
   },
   build: {
-    target: "esnext",
+    target: 'esnext',
   },
   worker: {
-    format: "es",
+    format: 'es',
   },
   server: {
     headers: {
-      "Cross-Origin-Opener-Policy": "same-origin",
-      "Cross-Origin-Embedder-Policy": "require-corp",
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
     },
     fs: {
       allow: [
@@ -42,7 +42,7 @@ export default defineConfig({
         // ✅ allow node_modules wasm access
         path.resolve(
           __dirname,
-          "node_modules/@demox-labs/miden-sdk/dist/assets/miden_client_web.wasm"
+          'node_modules/@demox-labs/miden-sdk/dist/assets/miden_client_web.wasm'
         ),
       ],
     },
